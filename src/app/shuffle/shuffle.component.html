@@ -1,0 +1,26 @@
+<div *ngFor="let flipcard of flipcards|async">
+  <ng-template [ngIf]="flipcard.index == current_index">
+  <mat-card>
+      <ng-template [ngIf]="side == 0">
+          <h1>{{flipcard.frontside}}</h1>
+      </ng-template>
+      <ng-template [ngIf]="side == 1">
+          <h1>{{flipcard.backside}}</h1>
+      </ng-template>
+      <button mat-raised-button (click)="changeSide()">Flip!</button>
+      <button mat-raised-button (click)="changeIndex()">Next!</button>
+  </mat-card>
+  </ng-template>
+</div>
+
+<!-- <div>
+    <mat-card>
+        <ng-template [ngIf]="side == 0">
+            <h1>{{flipcards[current_index].frontside}}</h1>
+        </ng-template>
+        <ng-template [ngIf]="side == 1">
+            <h1>{{flipcards[current_index].backside}}</h1>
+        </ng-template>
+        <button mat-raised-button (click)="changeSide()">Flip!</button>
+    </mat-card>
+</div> -->

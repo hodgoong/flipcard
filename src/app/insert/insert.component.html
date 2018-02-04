@@ -1,0 +1,20 @@
+<div>
+<h3>Insert New Flipcard!</h3>
+<form (ngSubmit)="insert()" #insertForm="ngForm">
+    <div class="form-group">
+        <label for="frontside">Front Side</label>
+        <input type="text" class="form-control" [(ngModel)]="flipcard.frontside" name="frontside" required>
+    </div>
+    <div class="form-group">
+        <label for="backside">Back Side</label>
+        <input type="text" class="form-control" [(ngModel)]="flipcard.backside" name="backside" required>
+    </div>
+    <div class="form-group">
+        <label for="backside">Note</label>
+        <input type="text" class="form-control" [(ngModel)]="flipcard.note" name="note">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!insertForm.form.valid">Insert</button>
+    </div>
+</form>
+</div>
