@@ -8,7 +8,6 @@ module.exports = function() {
         .then(() =>  console.log('connection succesful'))
         .catch((err) => console.error(err));;
     
-    require('../node_app/models/user.server.model');
     require('../node_app/models/flipcard.server.model');
 
     return db;

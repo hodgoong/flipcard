@@ -57,7 +57,7 @@ exports.remove = function(req, res, next) {
 }
 
 exports.get = function(req, res, next) {
-    console.log('retrieving all flipcards in the database');
+    console.log('retrieving all flipcards from the database');
     Flipcard.find({}, function(err, data){
         if (err) {
             return next(err);
