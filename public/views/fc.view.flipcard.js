@@ -1,7 +1,7 @@
 function view_flipcard() {
     const html =     
         `
-        <div class="card card-block d-flex" style="width: 22rem; height: 12rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" v-on:click.native="flip">
+        <div class="card card-block d-flex" style="width: 22rem; height: 12rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);" v-on:click.native="flip">
             <div>
                 <a class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored float-right" style="margin-right:10px; margin-top:6px" " onclick="favoriteFlipcard()">
                     <i class="material-icons">star</i>
