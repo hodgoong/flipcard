@@ -1,0 +1,26 @@
+{
+  "name": "flipcard",
+  "version": "2.0.0",
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hodgoong/flipcard.git"
+  },
+  "author": "Hojoong Chung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hodgoong/flipcard/issues"
+  },
+  "homepage": "https://github.com/hodgoong/flipcard#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "method-override": "^2.3.10",
+    "mongoose": "^5.0.15"
+  }
+}
