@@ -9,7 +9,7 @@ const router = {
             case '#flipcard':
                 return view_flipcard();
             case '#insert':
-                return insert;
+                return view_insert();
             case '#modify':
                 return view_modify();
             case '#manage':

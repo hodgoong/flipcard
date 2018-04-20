@@ -1,6 +1,6 @@
 /**
  * CARD BEHAVIOR FUNCTIONS
- */ 
+ */
 
 const flipcard = {
     flipFlipcard: function () {
@@ -15,14 +15,52 @@ const flipcard = {
         }
     },
     nextFlipcard: function () {
-        ((service.curr + 1 === service.cards.length) ? service.curr = 0 : service.curr += 1)
+        if (service.curr + 1 === service.cards.length){
+            service.curr = 0 
+            service.cards = _.shuffle(service.cards)
+            router.renderView()
+        } else {
+            service.curr += 1
+        }
         if (!service.isFront)
             document.getElementById("displayText").innerHTML = service.cards[service.curr].backside
         else if (service.isFront)
             document.getElementById("displayText").innerHTML = service.cards[service.curr].frontside
     },
     favoriteFlipcard: function () {
-        console.log('favorite')
+
+    },
+    insertNewCard() {
+        const frontside_value = document.getElementById('input-frontside').value
+        const backside_value = document.getElementById('input-backside').value
+        const user = 'hojoong'
+        const req_body = {
+            frontside: frontside_value,
+            backside: backside_value,
+            username: user
+        }
+
+        util.ajax('POST', URL_ADD_NEW_FLIPCARD, req_body, function (res) {
+            if (res !== null) {
+                service.cards.push(JSON.parse(res.responseText))
+            }
+        })
+    },
+    deleteFlipCard(_id) {
+        // add mongo _id to request query params
+        const URL = URL_DEL_NEW_FLIPCARD + "?_id=" + _id
+
+        util.ajax('GET', URL, null, function (res) {
+            if (res.status === 200) {
+                // deleting the DOM element
+                const domElem = document.querySelectorAll('[data-mongoid="' + _id + '"]')
+                domElem[0].parentNode.removeChild(domElem[0])
+
+                // delete the corresponding card data from the memory
+                const index = _.pluck(service.cards, '_id').indexOf(_id)
+                if (index > -1) service.cards.splice(index)
+            }
+        })
     }
 }
 

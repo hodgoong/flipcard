@@ -7,7 +7,7 @@ module.exports = function(app) {
 
     app.route('/api/remove-flipcard')
         //.post((req) => (console.log(req.body)))
-        .post(flipcards.remove);
+        .get(flipcards.remove);
 
     app.route('/api/modify-flipcard')
         //.post((req) => (console.log(req.body)))

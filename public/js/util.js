@@ -3,19 +3,23 @@
  */ 
 
 const util = {
-    ajax: function (requestType, url, callback) {
+    ajax: function (requestType, url, content, callback) {
         var xhr = new XMLHttpRequest();
-        console.log(url)
+        console.log(url)  
+        xhr.open(requestType, url, true)
+        
+        if (requestType === 'POST') xhr.setRequestHeader("Content-type", "application/json")
+
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                callback(this.responseText);
+                callback(this);
             }
         };
-    
-        xhr.open(requestType, url, true)
-        xhr.send();
+        
+        xhr.send(JSON.stringify(content));
+
     },
-    
+
     // ref: https://www.htmlgoodies.com/beyond/javascript/article.php/3724571/Using-Multiple-JavaScript-Onload-Functions.htm
     
     addLoadEvent: function (func) {
