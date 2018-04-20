@@ -22,9 +22,10 @@ const flipcard = {
         } else {
             service.curr += 1
         }
+        
         if (!service.isFront)
             document.getElementById("displayText").innerHTML = service.cards[service.curr].backside
-        else if (service.isFront)
+        else
             document.getElementById("displayText").innerHTML = service.cards[service.curr].frontside
     },
     favoriteFlipcard: function () {
@@ -43,24 +44,33 @@ const flipcard = {
         util.ajax('POST', URL_ADD_NEW_FLIPCARD, req_body, function (res) {
             if (res !== null) {
                 service.cards.push(JSON.parse(res.responseText))
+                document.getElementById('input-frontside').value = null
+                document.getElementById('input-backside').value = null
             }
         })
     },
     deleteFlipCard(_id) {
-        // add mongo _id to request query params
-        const URL = URL_DEL_NEW_FLIPCARD + "?_id=" + _id
+        if(confirm("Do you want to delete this item?")){
+            // add mongo _id to request query params
+            const URL = URL_DEL_NEW_FLIPCARD + "?_id=" + _id
 
-        util.ajax('GET', URL, null, function (res) {
-            if (res.status === 200) {
-                // deleting the DOM element
-                const domElem = document.querySelectorAll('[data-mongoid="' + _id + '"]')
-                domElem[0].parentNode.removeChild(domElem[0])
+            util.ajax('GET', URL, null, function (res) {
+                if (res.status === 200) {
+                    // deleting the DOM element
+                    const domElem = document.querySelectorAll('[data-mongoid="' + _id + '"]')
+                    domElem[0].parentNode.removeChild(domElem[0])
 
-                // delete the corresponding card data from the memory
-                const index = _.pluck(service.cards, '_id').indexOf(_id)
-                if (index > -1) service.cards.splice(index)
-            }
-        })
+                    // delete the corresponding card data from the memory
+                    const index = _.pluck(service.cards, '_id').indexOf(_id)
+                    if (index > -1) service.cards.splice(index, 1)
+
+                    // adjust the global variables
+                    if (service.curr > service.cards.length -1)
+                        service.curr = service.cards.length - 1
+
+                    router.renderView()
+                }
+            })
+        }
     }
 }
-

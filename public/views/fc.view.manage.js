@@ -1,7 +1,14 @@
 function view_manage() {
     const insertItem = function (data) {
+        
         let result = ''
-        if (data !== null){
+        if (data.length === 0){
+            result = 
+            `
+                <a style="width: 22rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);" class="list-group-item list-group-item-action">No cards in the DB. Please add cards.</a>
+            `
+        } 
+        else if (data.length > 0){
             data.forEach(function (elem) {
                 result +=
                 `
@@ -17,3 +24,4 @@ function view_manage() {
 
     return html
 }
+

@@ -19,7 +19,7 @@ function view_flipcard() {
                                 return service.cards[service.curr].backside
                             }
                         } else {
-                            return 'No cards in the DB'
+                            return 'No cards in the DB. <br> Please add cards.'
                         }
                     })() 
                 + 

@@ -4,8 +4,7 @@
 
 const util = {
     ajax: function (requestType, url, content, callback) {
-        var xhr = new XMLHttpRequest();
-        console.log(url)  
+        var xhr = new XMLHttpRequest(); 
         xhr.open(requestType, url, true)
         
         if (requestType === 'POST') xhr.setRequestHeader("Content-type", "application/json")
@@ -17,7 +16,6 @@ const util = {
         };
         
         xhr.send(JSON.stringify(content));
-
     },
 
     // ref: https://www.htmlgoodies.com/beyond/javascript/article.php/3724571/Using-Multiple-JavaScript-Onload-Functions.htm
