@@ -4,7 +4,7 @@
 
 const router = {
     selectView: function (hash) {
-        if (service.jwt !== null) {
+        if (service.jwt.get() !== null) {
             if (hash === '#') hash = '#flipcard'
             switch (hash) {
                 case '#flipcard':
@@ -21,7 +21,7 @@ const router = {
                 default:
                     return view_flipcard();
             }
-        } else if (!service.jwt) {
+        } else if (service.jwt.get() === null) {
             window.location.hash = '';
             return view_signin();
         }
@@ -29,7 +29,7 @@ const router = {
     renderView: function () {
         const hash = window.location.hash;
         document.getElementById('mainView').innerHTML = router.selectView(hash);
-        if (service.jwt){
+        if (service.jwt.get()){
             document.getElementById('navBar').innerHTML = navBar;
         }
     }

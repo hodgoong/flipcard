@@ -4,54 +4,66 @@
 
 const flipcard = {
     flipFlipcard: function () {
-        if (service.curr < service.cards.length) {
-            if (service.isFront) {
-                service.isFront = false
-                document.getElementById("displayText").innerHTML = service.cards[service.curr].backside
-            } else if (!service.isFront) {
-                service.isFront = true
-                document.getElementById("displayText").innerHTML = service.cards[service.curr].frontside
+        const currUser = service.currUser.get()
+        const flipcards = service.cards.get(currUser)
+
+        if (service.curr.get() < flipcards.length) {
+            if (service.isFront.get()) {
+                service.isFront.set()
+                document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].backside
+            } else if (!service.isFront.get()) {
+                service.isFront.set()
+                document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].frontside
             }
         }
     },
     nextFlipcard: function () {
-        if (service.curr + 1 === service.cards.length){
-            service.curr = 0 
-            service.cards = _.shuffle(service.cards)
+        const currUser = service.currUser.get()
+        const flipcards = service.cards.get(currUser)
+
+        if (service.curr.get() + 1 === flipcards.length) {
+            service.curr.set(0)
+            service.cards.set(currUser, _.shuffle(flipcards))
             router.renderView()
         } else {
-            service.curr += 1
+            service.curr.set(service.curr.get() + 1)
         }
-        
-        if (!service.isFront)
-            document.getElementById("displayText").innerHTML = service.cards[service.curr].backside
+
+        if (!service.isFront.get())
+            document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].backside
         else
-            document.getElementById("displayText").innerHTML = service.cards[service.curr].frontside
+            document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].frontside
     },
     favoriteFlipcard: function () {
 
     },
     insertNewCard() {
+        const currUser = service.currUser.get()
         const frontside_value = document.getElementById('input-frontside').value
         const backside_value = document.getElementById('input-backside').value
         const req_body = {
             frontside: frontside_value,
             backside: backside_value,
-            username: service.currUser
+            username: currUser
         }
 
         util.ajax('POST', URL_ADD_NEW_FLIPCARD, req_body, function (res) {
-            if (res !== null) {
-                service.cards.push(JSON.parse(res.responseText))
+            if (res.status === 200) {
+                let flipcards = service.cards.get(currUser)
+                const newCard = JSON.parse(res.responseText)
+                flipcards.push(newCard)
+                service.cards.set(currUser, flipcards)
                 document.getElementById('input-frontside').value = null
                 document.getElementById('input-backside').value = null
             }
         })
     },
     deleteFlipCard(_id) {
-        if(confirm("Do you want to delete this item?")){
+        if (confirm("Do you want to delete this item?")) {
             // add mongo _id to request query params
             const URL = URL_DEL_NEW_FLIPCARD + "?_id=" + _id
+            const currUser = service.currUser.get()
+            let flipcards = service.cards.get(currUser)
 
             util.ajax('GET', URL, null, function (res) {
                 if (res.status === 200) {
@@ -60,12 +72,13 @@ const flipcard = {
                     domElem[0].parentNode.removeChild(domElem[0])
 
                     // delete the corresponding card data from the memory
-                    const index = _.pluck(service.cards, '_id').indexOf(_id)
-                    if (index > -1) service.cards.splice(index, 1)
+                    const index = _.pluck(flipcards, '_id').indexOf(_id)
+                    flipcards.splice(index, 1)
+                    if (index > -1) service.cards.set(currUser, flipcards)
 
                     // adjust the global variables
-                    if (service.curr > service.cards.length -1)
-                        service.curr = service.cards.length - 1
+                    if (service.curr.get() > flipcards.length - 1)
+                        service.curr.set(flipcards.length - 1)
 
                     router.renderView()
                 }

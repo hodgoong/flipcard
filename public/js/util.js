@@ -7,7 +7,7 @@ const util = {
     var xhr = new XMLHttpRequest();
 
     xhr.open(requestType, url, true)
-    if (service.jwt) xhr.setRequestHeader('Authorization', 'Bearer ' + service.jwt)
+    if (service.jwt.get()) xhr.setRequestHeader('Authorization', 'Bearer ' + service.jwt.get())
     if (requestType === 'POST') xhr.setRequestHeader("Content-type", "application/json")
 
     xhr.onreadystatechange = function () {

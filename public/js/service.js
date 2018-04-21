@@ -11,11 +11,54 @@ const URL_SIGNIN = URL + '/auth/signin'
 const URL_SIGNUP = URL + '/auth/signup'
 
 let service = {
-    cards: {},
-    isFront: true,
-    curr: -1,
-    jwt: null,
-    currUser: ''
+    cards: {
+        set:function(username, elems){
+            window.localStorage.removeItem('fc_cards_'+username)
+            window.localStorage.setItem('fc_cards_'+username, JSON.stringify(elems))
+        },
+        get:function(username){
+            return JSON.parse(window.localStorage.getItem('fc_cards_'+username))
+        }
+    },
+    isFront: {
+        init:function(){
+            window.sessionStorage.setItem('fc_isFront', true)
+        },
+        set:function(){
+            if (window.sessionStorage.getItem('fc_isFront')) {
+                window.sessionStorage.setItem('fc_isFront', false)
+            } else {
+                window.sessionStorage.setItem('fc_isFront', true)
+            }
+        },
+        get:function(){
+            return window.sessionStorage.getItem('fc_isFront')
+        }
+    },
+    curr: {
+        set:function(_curr){
+            window.sessionStorage.setItem('fc_curr', _curr)
+        },
+        get:function(){
+            return parseInt(window.sessionStorage.getItem('fc_curr'))
+        }
+    },
+    jwt: {
+        set:function(_jwt){
+            window.sessionStorage.setItem('fc_jwt', _jwt)
+        },
+        get:function(){
+            return window.sessionStorage.getItem('fc_jwt')
+        }
+    },
+    currUser: {
+        set:function(_currUser){
+            window.sessionStorage.setItem('fc_currUser', _currUser)
+        },
+        get:function(){
+            return window.sessionStorage.getItem('fc_currUser')
+        }
+    }
 }
 
 let user = {
@@ -23,7 +66,7 @@ let user = {
     password: ''
 }
 
-if (window.sessionStorage.getItem('jwt')) {
-    service.jwt = window.sessionStorage.getItem('jwt')
-}
+// if (window.sessionStorage.getItem('jwt')) {
+//     service.jwt = window.sessionStorage.getItem('jwt')
+// }
 

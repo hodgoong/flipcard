@@ -1,6 +1,5 @@
 function view_manage() {
     const insertItem = function (data) {
-        
         let result = ''
         if (data.length === 0){
             result = 
@@ -22,7 +21,7 @@ function view_manage() {
     const html =
         `<div>` + 
         
-        insertItem(service.cards) + 
+        insertItem(service.cards.get(service.currUser.get())) + 
         
         `</div>
         <br>

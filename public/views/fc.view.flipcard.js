@@ -11,23 +11,18 @@ function view_flipcard() {
                 <h4 id="displayText" style="font-family:Tajawal;" onClick="flipcard.flipFlipcard()">`
                 + 
                     (function(){
-                        service.curr === -1 ? service.curr = 0 : null
-                        if (service.cards.length > 0) {
-                            if (service.isFront) {
-                                return service.cards[service.curr].frontside
-                            } else {
-                                return service.cards[service.curr].backside
-                            }
-                        } else {
-                            console.log('fetching from local first')
-                            if (window.sessionStorage.getItem(service.currUser)){
-                                if (service.isFront) {
-                                    return window.sessionStorage.getItem(service.currUser)[service.curr].frontside
+                        let flipcards = service.cards.get(service.currUser.get())
+                        if (flipcards!== null){
+                            service.curr.get() === -1 ? service.curr.set(0) : null
+                            if (flipcards.length > 0) {
+                                if (service.isFront.get()) {
+                                    return flipcards[service.curr.get()].frontside
                                 } else {
-                                    return window.sessionStorage.getItem(service.currUser)[service.curr].backside
+                                    return flipcards[service.curr.get()].backside
                                 }
                             } else {
                                 return 'No cards in the DB. <br> Please add cards.'
+                                console.log('fetching from local first')
                             }
                         }
                     })() 
