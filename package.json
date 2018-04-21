@@ -19,8 +19,12 @@
   "homepage": "https://github.com/hodgoong/flipcard#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.2.1",
     "method-override": "^2.3.10",
-    "mongoose": "^5.0.15"
+    "mongoose": "^5.0.15",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }

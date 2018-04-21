@@ -1,4 +1,5 @@
 const Flipcard = require('mongoose').model('Flipcard');
+const jwt = require('jsonwebtoken')
 
 /*
 * getErrorMessage() returns a unified error message from a Mongoose error object.
@@ -58,8 +59,8 @@ exports.remove = function (req, res, next) {
 }
 
 exports.get = function (req, res, next) {
-    console.log('retrieving all flipcards from the database');
-    Flipcard.find({}, function (err, data) {
+    console.log('retrieving flipcards for specific user from the database');
+    Flipcard.find({'username':req.body.username}, function (err, data) {
         if (err) {
             return next(err);
         } else {
@@ -72,12 +73,11 @@ exports.get = function (req, res, next) {
 }
 
 exports.getShuffled = function (req, res, next) {
-    console.log('retrieving all flipcards in the database');
-    Flipcard.find({}, function (err, data) {
+    console.log('retrieving shuffled flipcards for specific user from the database');
+    Flipcard.find({'username':req.body.username}, function (err, data) {
         if (err) {
             return next(err);
         } else {
-            //TODO: shuffle function here
             let shuffeledData = shuffle(data);
             var result = [];
             i = 0;

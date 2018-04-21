@@ -34,11 +34,10 @@ const flipcard = {
     insertNewCard() {
         const frontside_value = document.getElementById('input-frontside').value
         const backside_value = document.getElementById('input-backside').value
-        const user = 'hojoong'
         const req_body = {
             frontside: frontside_value,
             backside: backside_value,
-            username: user
+            username: service.currUser
         }
 
         util.ajax('POST', URL_ADD_NEW_FLIPCARD, req_body, function (res) {

@@ -20,7 +20,16 @@ function view_manage() {
     }
 
     const html =
-        `<div>` + insertItem(service.cards) + `</div><br><br><br><br><br>`
+        `<div>` + 
+        
+        insertItem(service.cards) + 
+        
+        `</div>
+        <br>
+        <div style="text-align:center; width: 22rem">
+            <p style="font-size: 13px;">Tap the item above to delete the data
+        </div>
+        <br><br><br><br><br>`
 
     return html
 }

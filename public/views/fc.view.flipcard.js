@@ -1,7 +1,7 @@
 function view_flipcard() {
     const html =
         `
-        <div class="card card-block d-flex" style="width: 22rem; height: 12rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);" v-on:click.native="flip">
+        <div class="card card-block d-flex" style="width: 22rem; height: 12rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);">
             <div>
                 <a class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored float-right" style="margin-right:10px; margin-top:6px" " onclick="flipcard.favoriteFlipcard()">
                     <i class="material-icons">star</i>
@@ -19,7 +19,16 @@ function view_flipcard() {
                                 return service.cards[service.curr].backside
                             }
                         } else {
-                            return 'No cards in the DB. <br> Please add cards.'
+                            console.log('fetching from local first')
+                            if (window.sessionStorage.getItem(service.currUser)){
+                                if (service.isFront) {
+                                    return window.sessionStorage.getItem(service.currUser)[service.curr].frontside
+                                } else {
+                                    return window.sessionStorage.getItem(service.currUser)[service.curr].backside
+                                }
+                            } else {
+                                return 'No cards in the DB. <br> Please add cards.'
+                            }
                         }
                     })() 
                 + 
