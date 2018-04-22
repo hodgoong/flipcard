@@ -1,8 +1,13 @@
 const auth = {
-    signin: function () {
-        user.username = document.getElementById('input-id').value
-        user.password = document.getElementById('input-pw').value
-
+    signin: function (signinType) {
+        if(signinType === 'guest'){
+            user.username = 'guest'
+            user.password = 'guest'
+        }
+        else{
+            user.username = document.getElementById('input-id').value
+            user.password = document.getElementById('input-pw').value
+        }
         util.ajax('POST', URL_SIGNIN, user, function (res) {
             if (res.status === 200) {
                 service.jwt.set(JSON.parse(res.responseText).jwt)

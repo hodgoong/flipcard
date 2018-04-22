@@ -11,10 +11,8 @@ const flipcard = {
             service.isFront.set()
             let isFront = service.isFront.get()
             if (isFront) {
-                console.log(isFront)
                 document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].frontside
             } else {
-                console.log(isFront)
                 document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].backside
             }
         }
