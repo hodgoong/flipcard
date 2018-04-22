@@ -8,12 +8,14 @@ const flipcard = {
         const flipcards = service.cards.get(currUser)
 
         if (service.curr.get() < flipcards.length) {
-            if (service.isFront.get()) {
-                service.isFront.set()
-                document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].backside
-            } else if (!service.isFront.get()) {
-                service.isFront.set()
+            service.isFront.set()
+            let isFront = service.isFront.get()
+            if (isFront) {
+                console.log(isFront)
                 document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].frontside
+            } else {
+                console.log(isFront)
+                document.getElementById("displayText").innerHTML = flipcards[service.curr.get()].backside
             }
         }
     },

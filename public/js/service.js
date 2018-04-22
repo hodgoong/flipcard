@@ -2,7 +2,7 @@
  * GLOBAL VARIABLES
  */ 
 
-const URL = 'http://localhost:8000' // 'https://flipcard.io';
+const URL = 'http://flipcard.io';
 const URL_GET_FLIPCARD = URL + '/api/get-flipcard'
 const URL_ADD_NEW_FLIPCARD = URL + '/api/add-new-flipcard'
 const URL_GET_FLIPCARD_SHUFFLED = URL + '/api/get-flipcard-shuffle'
@@ -25,14 +25,17 @@ let service = {
             window.sessionStorage.setItem('fc_isFront', true)
         },
         set:function(){
-            if (window.sessionStorage.getItem('fc_isFront')) {
+            // convert string to boolean
+            const isFront = (window.sessionStorage.getItem('fc_isFront') === 'true')
+            if (isFront) {
                 window.sessionStorage.setItem('fc_isFront', false)
             } else {
                 window.sessionStorage.setItem('fc_isFront', true)
             }
         },
         get:function(){
-            return window.sessionStorage.getItem('fc_isFront')
+            // convert string to boolean
+            return (window.sessionStorage.getItem('fc_isFront') === 'true')
         }
     },
     curr: {
@@ -40,6 +43,7 @@ let service = {
             window.sessionStorage.setItem('fc_curr', _curr)
         },
         get:function(){
+            // convert string to int
             return parseInt(window.sessionStorage.getItem('fc_curr'))
         }
     },
