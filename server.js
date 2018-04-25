@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');
+const https = require('https');
 
 const configureMongoose = require('./node_config/mongoose');
 const configureExpress = require('./node_config/express');
@@ -9,4 +9,11 @@ const db = configureMongoose();
 const app = configureExpress();
 const passport = configurePassport();
 
-app.listen(4202)
+const https_port = 4202;
+
+https.createServer({
+    key: fs.readFileSync('./cert/privkey.pem'),
+    cert: fs.readFileSync('/cert/fullchain.pem')
+}, app).listen(https_port, function() {
+    console.log('https Server started on port %d', https_port);
+});
