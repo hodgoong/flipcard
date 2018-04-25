@@ -1,5 +1,6 @@
 const express = require('express');
 const https = require('https');
+const fs = require('fs')
 
 const configureMongoose = require('./node_config/mongoose');
 const configureExpress = require('./node_config/express');
