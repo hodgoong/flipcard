@@ -13,8 +13,8 @@ const passport = configurePassport();
 const https_port = 4202;
 
 https.createServer({
-    key: fs.readFileSync('./cert/privkey.pem'),
-    cert: fs.readFileSync('/cert/fullchain.pem')
+    key: fs.readFileSync('/home/ubuntu/flipcard/cert/privkey.pem'),
+    cert: fs.readFileSync('/home/ubuntu/flipcard/cert/fullchain.pem')
 }, app).listen(https_port, function() {
     console.log('https Server started on port %d', https_port);
 });
