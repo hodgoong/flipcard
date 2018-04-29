@@ -17,6 +17,6 @@ function navBar() {
     </div>
     `
 
-    return JSON.stringify(navBar)
+    return navBar
 }
 
