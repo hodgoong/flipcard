@@ -30,7 +30,7 @@ const router = {
         const hash = window.location.hash;
         document.getElementById('mainView').innerHTML = router.selectView(hash);
         if (service.jwt.get()){
-            document.getElementById('navBar').innerHTML = navBar;
+            document.getElementById('navBar').innerHTML = navBar();
         }
     }
 }
