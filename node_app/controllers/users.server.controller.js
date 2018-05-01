@@ -27,7 +27,7 @@ function getErrorMessage(err) {
 };
 
 
-exports.signup = function(req, res, next) {
+exports.signup = function (req, res, next) {
     console.log(req.body);
 
     if (!req.user) {
@@ -38,24 +38,24 @@ exports.signup = function(req, res, next) {
             if (err) {
                 const message = getErrorMessage(err);
                 console.log(message);
-                res.status(500).json({message:"ID is duplicated. Please use another ID."});
+                console.log('sending 500')
+                res.status(500).json({ message: "ID is duplicated. Please use another ID." });
+            } else {
+                console.log('saving done');
+                res.status(200).json({ message: "New id has been created. Please sign in." });
             }
-            console.log('saving done');
-
-            res.status(200).json({message:"New id has been created. Please sign in."});
         });
-
     } else {
         return res.redirect('/');
     }
 }
 
-exports.signout = function(req, res) {
+exports.signout = function (req, res) {
     req.logout();
     res.redirect('/');
 }
 
-exports.create = function(req, res, next) {
+exports.create = function (req, res, next) {
     const user = new User(req.body);
 
     user.save((err) => {
@@ -67,7 +67,7 @@ exports.create = function(req, res, next) {
     });
 }
 
-exports.list = function(req, res, next) {
+exports.list = function (req, res, next) {
     User.find({}, 'username email', {
         limit: 10
     }, (err, users) => {
@@ -79,12 +79,12 @@ exports.list = function(req, res, next) {
     });
 };
 
-exports.read = function(req, res) {
+exports.read = function (req, res) {
     res.json(req.user);
 }
 
 //check if the id exists and if exists, pass an error
-exports.userByID = function(req, res, next, id) {
+exports.userByID = function (req, res, next, id) {
     User.findOne({
         _id: id
     }, (err, user) => {
@@ -97,7 +97,7 @@ exports.userByID = function(req, res, next, id) {
     });
 };
 
-exports.update = function(req, res, next) {
+exports.update = function (req, res, next) {
     User.findByIdAndUpdate(req.user.id, req.body, {
         'new': true
     }, (err, user) => {
@@ -109,7 +109,7 @@ exports.update = function(req, res, next) {
     });
 };
 
-exports.delete = function(req, res, next) {
+exports.delete = function (req, res, next) {
     req.user.remove(err => {
         if (err) {
             return next(err);
@@ -119,7 +119,7 @@ exports.delete = function(req, res, next) {
     });
 };
 
-exports.sessionCheck = function(req, res, next) {
+exports.sessionCheck = function (req, res, next) {
     if (req.session.lastVisit) {
         console.log(req.session.lastVisit);
     }
