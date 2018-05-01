@@ -14,7 +14,7 @@ module.exports = function() {
     app.use(methodOverride());
     
     // Logger
-    let accessLogStream = fs.createWriteStream(path.join('../log/access.log'), {flags: 'a'})
+    let accessLogStream = fs.createWriteStream('../log/access.log', {flags: 'a'})
     app.use(morgan('combined', {stream: accessLogStream}))
 
     app.use(passport.initialize()); // Responsible for bootstrapping the Passport module.
