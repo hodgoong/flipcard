@@ -63,7 +63,9 @@ exports.remove = function (req, res, next) {
                     res.status(200).json({status:200})
                     console.log(flipcard);
                 }
-        })
+            })
+        }
+    })
 }
 
 exports.get = function (req, res, next) {
