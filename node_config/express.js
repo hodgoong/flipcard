@@ -16,7 +16,7 @@ module.exports = function() {
     
     // Logger
     var accessLogStream = fs.createWriteStream(path.join(__dirname, '../log/access.log'), {flags: 'a'})
-    app.use(morgan('tiny', {stream: accessLogStream}))
+    app.use(morgan('short', {stream: accessLogStream}))
 
     app.use(passport.initialize()); // Responsible for bootstrapping the Passport module.
     app.use(passport.session()); // To keep track of your user's session.
