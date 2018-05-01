@@ -24,6 +24,9 @@ const FlipcardSchema = new Schema ({
     index:{
         type: Number
     },
+    isRemoved:{
+        type: Boolean
+    },
     created: {
         type: Date,
         default: Date.now

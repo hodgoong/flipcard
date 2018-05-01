@@ -28,15 +28,7 @@ const UserSchema = new Schema ({
     },
     providerId: String,
     providerData: {}
-
-    /* command:
-    *  curl -X POST -H "Content-Type: application/json" -d '{"firstName":"First", "lastName":"Last","email":"user@example.com", "username":"username","password":"password"}' localhost:3005/users
-    */
 });
-
-// UserSchema.virtual('fullName').get(function() {
-//     return this.firstName + ' ' + this.lastName;
-// });
 
 UserSchema.pre('save', function(next) {
     console.log('saving the model....');
@@ -44,10 +36,6 @@ UserSchema.pre('save', function(next) {
         this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
         this.password = this.hashPassword(this.password);
     }
-    
-    // Serial middleware functions are executed one after another, when each middleware calls next.
-    // in this case, it calls the UserSchema.post('save') function.
-    // It will call UserSchema.pre('save') if there is one.
     next(); 
 });
 
@@ -63,23 +51,6 @@ UserSchema.post('save', function() {
 UserSchema.methods.authenticate = function(password) {
     return this.password === this.hashPassword(password);
 };
-
-// UserSchema.statics.findUniqueUserId = function(userId, suffix, callback) {
-//     var possibleUserId = userId + (suffix || '');
-//     this.findOne({
-//         userId: possibleUserId
-//     }, (err, user) => {
-//         if (!err) {
-//             if (!user) {
-//                 callback(possibleUserId);
-//             } else {
-//                 return this.findUniqueUserId(userId, (suffix || 0) + 1, callback);
-//             }
-//         } else {
-//             callback(null);
-//         }
-//     });
-// };
 
 UserSchema.set('toJSON', { 
     getters: true

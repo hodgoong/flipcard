@@ -21,8 +21,7 @@ const auth = {
                         router.renderView()
                     }
                 })
-            }
-            else {
+            } else {
                 alert(JSON.parse(res.responseText).message)
             }
         })

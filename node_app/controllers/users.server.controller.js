@@ -38,8 +38,8 @@ exports.signup = function (req, res, next) {
             if (err) {
                 const message = getErrorMessage(err);
                 console.log(message);
-                console.log('sending 500')
-                res.status(500).json({ message: "ID is duplicated. Please use another ID." });
+                //sending 200 instead of 500 for the alert popup
+                res.status(200).json({ message: "ID is duplicated. Please use another ID." });
             } else {
                 console.log('saving done');
                 res.status(200).json({ message: "New id has been created. Please sign in." });
