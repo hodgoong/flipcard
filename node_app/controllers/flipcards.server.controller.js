@@ -48,7 +48,7 @@ exports.create = function (req, res, next) {
 exports.remove = function (req, res, next) {
     console.log('removing flipcard from the database : ' + req.query._id);
 
-    Flipcard.findOneAndUpdate(req.guery._id, { isRemoved: true }, function (err) {
+    Flipcard.findOneAndUpdate(req.query._id, { isRemoved: true }, function (err) {
         if (err) {
             console.log(err);
             return next(err);
