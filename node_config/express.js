@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport')
 const methodOverride = require('method-override');
+const morgan = require('morgan')
+const fs = require('fs')
 
 module.exports = function() {
     const app = express();
@@ -10,6 +12,10 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(methodOverride());
+    
+    // Logger
+    let accessLogStream = fs.createWriteStream(path.join('../log/access.log'), {flags: 'a'})
+    app.use(morgan('combined', {stream: accessLogStream}))
 
     app.use(passport.initialize()); // Responsible for bootstrapping the Passport module.
     app.use(passport.session()); // To keep track of your user's session.
