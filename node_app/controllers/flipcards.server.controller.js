@@ -30,6 +30,7 @@ exports.create = function (req, res, next) {
     console.log('creating new flipcard in the database');
     console.log(req.body);
     const flipcard = new Flipcard(req.body);
+    flipcard.isRemoved = false;
     console.log(flipcard)
     console.log("saving");
     flipcard.save((err, doc) => {
@@ -47,11 +48,12 @@ exports.create = function (req, res, next) {
 exports.remove = function (req, res, next) {
     console.log('removing flipcard from the database : ' + req.query._id);
 
-    Flipcard.remove({ _id: req.query._id }, function (err) {
+    Flipcard.find({ _id: req.query._id }, function (err, data) {
         if (err) {
             console.log(err);
             return next(err);
         } else {
+            data.isRemoved = true;
             console.log('remove succeed');
             res.status(200).json({status:200})
         }
@@ -60,7 +62,7 @@ exports.remove = function (req, res, next) {
 
 exports.get = function (req, res, next) {
     console.log('retrieving flipcards for specific user from the database');
-    Flipcard.find({'username':req.body.username}, function (err, data) {
+    Flipcard.find({'username':req.body.username, 'isRemoved':false}, function (err, data) {
         if (err) {
             return next(err);
         } else {
@@ -74,7 +76,7 @@ exports.get = function (req, res, next) {
 
 exports.getShuffled = function (req, res, next) {
     console.log('retrieving shuffled flipcards for specific user from the database');
-    Flipcard.find({'username':req.body.username}, function (err, data) {
+    Flipcard.find({'username':req.body.username, 'isRemoved':false}, function (err, data) {
         if (err) {
             return next(err);
         } else {

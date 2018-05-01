@@ -38,7 +38,7 @@ exports.signup = function(req, res, next) {
             if (err) {
                 const message = getErrorMessage(err);
                 console.log(message);
-                return res.redirect('/');
+                res.status(500).json({message:"ID is duplicated. Please use another ID."});
             }
             console.log('saving done');
 
