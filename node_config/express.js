@@ -5,6 +5,7 @@ const passport = require('passport')
 const methodOverride = require('method-override');
 const morgan = require('morgan')
 const fs = require('fs')
+var path = require('path')
 
 module.exports = function() {
     const app = express();
@@ -14,7 +15,7 @@ module.exports = function() {
     app.use(methodOverride());
     
     // Logger
-    let accessLogStream = fs.createWriteStream('../log/access.log', {flags: 'a'})
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, '../log/access.log'), {flags: 'a'})
     app.use(morgan('combined', {stream: accessLogStream}))
 
     app.use(passport.initialize()); // Responsible for bootstrapping the Passport module.
