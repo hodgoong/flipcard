@@ -16,8 +16,8 @@ const router = {
                 case '#manage':
                     return view_manage();
                 case '#signout':
-                    window.sessionStorage.clear()
                     location.reload()
+                    window.sessionStorage.clear()
                 default:
                     return view_flipcard();
             }
