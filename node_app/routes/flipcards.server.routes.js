@@ -6,21 +6,21 @@ const auth = jwt({secret:config.sessionSecret})
 module.exports = function(app) {
     app.route('/api/add-new-flipcard')
         //.post((req) => (console.log(req.body)))
-        .post(flipcards.create);
+        .post(auth, flipcards.create);
 
     app.route('/api/remove-flipcard')
         //.post((req) => (console.log(req.body)))
-        .get(flipcards.remove);
+        .get(auth, flipcards.remove);
 
     app.route('/api/modify-flipcard')
         //.post((req) => (console.log(req.body)))
-        .post(flipcards.modify);
+        .post(auth, flipcards.modify);
 
     app.route('/api/get-flipcard')
-        .get(flipcards.get);
+        .get(auth, flipcards.get);
 
     app.route('/api/get-flipcard-shuffle')
-        .post(flipcards.getShuffled);
+        .post(auth, flipcards.getShuffled);
         
         
         // /*
