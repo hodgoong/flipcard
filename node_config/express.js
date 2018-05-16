@@ -1,43 +1,27 @@
 const config = require('./config');
 const express = require('express');
-const morgan = require('morgan');
-const compress = require('compression');
 const bodyParser = require('body-parser');
+const passport = require('passport')
 const methodOverride = require('method-override');
-const session = require('express-session');
-const passport = require('passport');
-const path = require('path');
-const forceSsl = require('express-force-ssl');
-const helmet = require('helmet')
+const morgan = require('morgan')
+const fs = require('fs')
+var path = require('path')
 
 module.exports = function() {
     const app = express();
-    if (process.env.NODE_ENV === 'development') {
-        app.use(morgan('dev'));
-    } else if (process.env.NODE_ENV === 'production') {
-        app.use(compress());
-    }
 
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(methodOverride());
-
-    app.use(express.static(path.join(__dirname, '../dist')));
-    app.use('/shuffle', express.static(path.join(__dirname, '../dist')));
-    app.use('/manage', express.static(path.join(__dirname, '../dist')));
-    app.use('/insert', express.static(path.join(__dirname, '../dist')));
-
-    app.use(session({
-        saveUninitialized: true,
-        resave: true,
-        secret: config.sessionSecret
-    }));
+    
+    // Logger
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, '../log/access.log'), {flags: 'a'})
+    app.use(morgan('short', {stream: accessLogStream}))
 
     app.use(passport.initialize()); // Responsible for bootstrapping the Passport module.
     app.use(passport.session()); // To keep track of your user's session.
 
-    app.use(forceSsl);
-    app.use(helmet());
+    app.use('/', express.static('public'))
 
     // Below code returns express instance, which is app, via reference.
     require('../node_app/routes/users.server.routes.js')(app);

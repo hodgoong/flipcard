@@ -18,6 +18,9 @@ const FlipcardSchema = new Schema ({
     note: {
         type: String
     },
+    isRemoved:{
+        type: Boolean
+    },
     difficulty: {
         type: Number
     },

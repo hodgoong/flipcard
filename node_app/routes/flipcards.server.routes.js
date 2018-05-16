@@ -1,23 +1,26 @@
 const flipcards = require('../controllers/flipcards.server.controller'); 
+const config = require('../../node_config/config')
+const jwt = require('express-jwt');
+const auth = jwt({secret:config.sessionSecret})
 
 module.exports = function(app) {
     app.route('/api/add-new-flipcard')
         //.post((req) => (console.log(req.body)))
-        .post(flipcards.create);
+        .post(auth, flipcards.create);
 
     app.route('/api/remove-flipcard')
         //.post((req) => (console.log(req.body)))
-        .post(flipcards.remove);
+        .get(auth, flipcards.remove);
 
     app.route('/api/modify-flipcard')
         //.post((req) => (console.log(req.body)))
-        .post(flipcards.modify);
+        .post(auth, flipcards.modify);
 
     app.route('/api/get-flipcard')
-        .get(flipcards.get);
+        .get(auth, flipcards.get);
 
     app.route('/api/get-flipcard-shuffle')
-        .get(flipcards.getShuffled);
+        .post(auth, flipcards.getShuffled);
         
         
         // /*

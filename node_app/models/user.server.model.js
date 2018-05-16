@@ -6,13 +6,14 @@ const UserSchema = new Schema ({
     username: {
         type: String,
         trim: true,
+        unique: true,
         required: 'Name is required',
     },
     password: {
         type: String,
-        validate: [(password) => {
-            return password && password.length > 6;
-        }, 'Password should be longer']
+        // validate: [(password) => {
+        //     return password && password.length > 6;
+        // }, 'Password should be longer']
     },
     created: {
         type: Date,
@@ -33,9 +34,9 @@ const UserSchema = new Schema ({
     */
 });
 
-UserSchema.virtual('fullName').get(function() {
-    return this.firstName + ' ' + this.lastName;
-});
+// UserSchema.virtual('fullName').get(function() {
+//     return this.firstName + ' ' + this.lastName;
+// });
 
 UserSchema.pre('save', function(next) {
     console.log('saving the model....');
@@ -52,8 +53,6 @@ UserSchema.pre('save', function(next) {
 
 UserSchema.methods.hashPassword = function(password) {
     console.log('hashing the password....');
-    console.log(this.salt);
-    console.log(password);
     return crypto.pbkdf2Sync(password, this.salt, 10000, 64, 'sha512').toString('base64');
 };
 
@@ -65,22 +64,22 @@ UserSchema.methods.authenticate = function(password) {
     return this.password === this.hashPassword(password);
 };
 
-UserSchema.statics.findUniqueUserId = function(userId, suffix, callback) {
-    var possibleUserId = userId + (suffix || '');
-    this.findOne({
-        userId: possibleUserId
-    }, (err, user) => {
-        if (!err) {
-            if (!user) {
-                callback(possibleUserId);
-            } else {
-                return this.findUniqueUserId(userId, (suffix || 0) + 1, callback);
-            }
-        } else {
-            callback(null);
-        }
-    });
-};
+// UserSchema.statics.findUniqueUserId = function(userId, suffix, callback) {
+//     var possibleUserId = userId + (suffix || '');
+//     this.findOne({
+//         userId: possibleUserId
+//     }, (err, user) => {
+//         if (!err) {
+//             if (!user) {
+//                 callback(possibleUserId);
+//             } else {
+//                 return this.findUniqueUserId(userId, (suffix || 0) + 1, callback);
+//             }
+//         } else {
+//             callback(null);
+//         }
+//     });
+// };
 
 UserSchema.set('toJSON', { 
     getters: true
